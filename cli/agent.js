@@ -39,7 +39,23 @@ Cards: to show the user a card with buttons, put a fenced block in your reply:
 /**
  * Runs one turn. Calls onText(fullTextSoFar), onActivity(label|null); resolves to { text, stopReason, error }.
  */
-export function runTurn({ agent, workspace, permissions, prompt, primed, onText, onActivity, onSpawn }) {
+export async function runTurn(opts) {
+  const first = await runOnce(opts);
+  // A cold agent start sometimes exits before saying anything; one quiet retry hides that from the user.
+  if (first.error && !first.text && !first.stopReason && !first.cancelled) return runOnce(opts);
+  return first;
+}
+
+// Node's own warnings (e.g. the proxy agent notice) are noise, not the reason a turn failed.
+function cleanStderr(stderr) {
+  return stderr
+    .split("\n")
+    .filter((l) => l.trim() && !/^\(node:\d+\)|^\(Use `node --trace-warnings/.test(l))
+    .slice(-3)
+    .join("\n");
+}
+
+function runOnce({ agent, workspace, permissions, prompt, primed, onText, onActivity, onSpawn }) {
   const args = [acpxBin(), "--cwd", workspace, "--format", "json", ...(PERMISSION_FLAGS[permissions] || PERMISSION_FLAGS["approve-all"])];
   if (agent === "claude") args.push("--append-system-prompt", SYSTEM_PROMPT);
   args.push(agent, "-s", "main", "-f", "-");
@@ -78,8 +94,8 @@ export function runTurn({ agent, workspace, permissions, prompt, primed, onText,
       }
     });
     child.on("close", (code) => {
-      if (!stopReason && !error && code !== 0) error = stderr.trim().split("\n").slice(-3).join("\n") || `acpx exited with ${code}`;
-      resolve({ text: reply, stopReason, error });
+      if (!stopReason && !error && code !== 0) error = cleanStderr(stderr) || `The agent exited with code ${code}`;
+      resolve({ text: reply, stopReason, error, cancelled: child.killed });
     });
   });
 }
