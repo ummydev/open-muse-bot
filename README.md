@@ -112,3 +112,6 @@ Open Muse Bot is an independent project, not affiliated with Meta, Anthropic or 
 ## License
 
 GPL-3.0-only. See [LICENSE](LICENSE).
+
+The app's UI layout is adapted from [OpenMuse](https://github.com/CopilotKit/openmuse) (MIT); see
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
