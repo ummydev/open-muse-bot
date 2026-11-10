@@ -1,0 +1,28 @@
+{
+  "name": "open-muse-bot",
+  "version": "0.1.0",
+  "description": "Turn any local coding agent (Claude Code, Codex, …) into a personal agent you use from your phone.",
+  "type": "module",
+  "bin": {
+    "open-muse-bot": "cli/bin.js"
+  },
+  "files": [
+    "cli"
+  ],
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "test": "node --test cli/"
+  },
+  "dependencies": {
+    "acpx": "0.22.0",
+    "qrcode-terminal": "^0.12.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ummydev/open-muse-bot.git"
+  }
+}

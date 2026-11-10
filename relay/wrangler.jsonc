@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "open-muse-bot",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-15",
+  "durable_objects": {
+    "bindings": [{ "name": "COMPUTER", "class_name": "Computer" }]
+  },
+  // SQLite-backed, which the Workers Free plan needs. The object stores only a hash of the computer's token.
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Computer"] }],
+  // The web app (Expo web export). /ws/* goes to the Worker first.
+  "assets": {
+    "directory": "../app/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/ws/*"]
+  },
+  "observability": { "enabled": true }
+}

@@ -1,0 +1,8 @@
+node_modules/
+.scratch/
+.wrangler/
+app/dist/
+app/.expo/
+.DS_Store
+*.log
+.dev.vars

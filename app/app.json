@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Open Muse Bot",
+    "slug": "open-muse-bot",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "dev.ummy.openmusebot"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "dev.ummy.openmusebot"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "Open Muse Bot",
+      "output": "single"
+    },
+    "scheme": "openmusebot"
+  }
+}
